@@ -1,0 +1,11 @@
+/Users/nofel/Desktop/Package/DrMW.Layers/DrMW.Core/bin/Debug/net6.0/DrMW.Core.deps.json
+/Users/nofel/Desktop/Package/DrMW.Layers/DrMW.Core/bin/Debug/net6.0/DrMW.Core.dll
+/Users/nofel/Desktop/Package/DrMW.Layers/DrMW.Core/bin/Debug/net6.0/DrMW.Core.pdb
+/Users/nofel/Desktop/Package/DrMW.Layers/DrMW.Core/obj/Debug/net6.0/DrMW.Core.GeneratedMSBuildEditorConfig.editorconfig
+/Users/nofel/Desktop/Package/DrMW.Layers/DrMW.Core/obj/Debug/net6.0/DrMW.Core.AssemblyInfoInputs.cache
+/Users/nofel/Desktop/Package/DrMW.Layers/DrMW.Core/obj/Debug/net6.0/DrMW.Core.AssemblyInfo.cs
+/Users/nofel/Desktop/Package/DrMW.Layers/DrMW.Core/obj/Debug/net6.0/DrMW.Core.csproj.CoreCompileInputs.cache
+/Users/nofel/Desktop/Package/DrMW.Layers/DrMW.Core/obj/Debug/net6.0/DrMW.Core.dll
+/Users/nofel/Desktop/Package/DrMW.Layers/DrMW.Core/obj/Debug/net6.0/refint/DrMW.Core.dll
+/Users/nofel/Desktop/Package/DrMW.Layers/DrMW.Core/obj/Debug/net6.0/DrMW.Core.pdb
+/Users/nofel/Desktop/Package/DrMW.Layers/DrMW.Core/obj/Debug/net6.0/ref/DrMW.Core.dll

@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "lwjFcV6OMBButlEAHCc9yxmB9Bq2n5wGU6iO5aVTB3uUrEqEma+W2pxPi/vRh8hXKeoDZborvPbo83PB8weeRQ==",
+  "success": true,
+  "projectFilePath": "/Users/nofel/Desktop/Package/DrMW.Layers/DrMW.Api/DrMW.Api.csproj",
+  "expectedPackageFiles": [
+    "/Users/nofel/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/Users/nofel/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/nofel/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "/Users/nofel/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/Users/nofel/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "/Users/nofel/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
