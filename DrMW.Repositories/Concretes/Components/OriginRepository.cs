@@ -1,6 +1,7 @@
 using AutoMapper;
 using DrMW.Core.Models.Abstractions;
 using DrMW.Repositories.Abstractions.Components;
+using DrMW.Repositories.Abstractions.Components.Common.Writes;
 using DrMW.Repositories.Concretes.Components.Common.Reads;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,16 +10,20 @@ namespace DrMW.Repositories.Concretes.Components;
 public class OriginRepository<TEntity, TPrimary> : ReadOriginRepository<TEntity,TPrimary>,IOriginRepository<TEntity, TPrimary>
     where TEntity : class, IOriginEntity<TPrimary>
 {
-   
     /// <summary>
     /// Initializes a new instance of the <see cref="OriginRepository{TEntity,TPrimary}"/> class.
     /// </summary>
-    /// <param name="dbContext">The database context to be used by the repository.</param>
-    public OriginRepository(DbContext dbContext,IMapper mapper) : base(dbContext,mapper)
+    /// <param name="database">The database context to be used by the repository.</param>
+    /// <param name="mapper"></param>
+    public OriginRepository(IWriteDatabase database,IMapper mapper) : base(database.Context,mapper)
     {
        
     }
     
+    protected internal OriginRepository(DbContext dbContext,IMapper mapper) : base(dbContext,mapper)
+    {
+       
+    }
 
     /// <summary>
     /// Asynchronously adds a new entity to the DbSet.

@@ -9,7 +9,7 @@ namespace DrMW.Repositories.Services.Concretes
     /// <summary>
     /// Base class for managing services.
     /// </summary>
-    public class ServiceManager : IServiceManager
+    public abstract class ServiceManager : IServiceManager
     {
         protected readonly Dictionary<Type, object> Services;
         protected readonly IUnitOfWork UnitOfWork;
@@ -83,10 +83,11 @@ namespace DrMW.Repositories.Services.Concretes
             {
                 if (service is IDisposable disposableService)
                 {
-                    disposableService.Dispose();
+                    disposableService?.Dispose();
                 }
             }
-
+            UnitOfWork?.Dispose();
+            QueryRepositories?.Dispose();
             Services.Clear();
         }
 

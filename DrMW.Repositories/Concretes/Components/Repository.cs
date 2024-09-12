@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using AutoMapper;
 using DrMW.Core.Models.Abstractions;
 using DrMW.Repositories.Abstractions.Components;
+using DrMW.Repositories.Abstractions.Components.Common.Writes;
 using DrMW.Repositories.Concretes.Components.Common.Reads;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,10 +21,13 @@ public class Repository<TEntity, TPrimary> : ReadRepository<TEntity,TPrimary>,IR
     /// </summary>
     /// <param name="dbContext">The database context to be used by the repository.</param>
     /// <param name="mapper"></param>
-    public Repository(DbContext dbContext,IMapper mapper) : base(dbContext,mapper)
+    protected internal Repository(DbContext dbContext,IMapper mapper) : base(dbContext,mapper)
     {
     }
     
+    public Repository(IWriteDatabase database,IMapper mapper) : base(database.Context,mapper)
+    {
+    }
     
     /// <summary>
     /// Asynchronously adds a new entity to the DbSet.

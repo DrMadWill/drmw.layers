@@ -13,7 +13,7 @@ namespace DrMW.Repositories.Services.Concretes
         protected readonly IUnitOfWork UnitOfWork;
         protected readonly IQueryRepositories QueryRepositories;
         protected readonly IMapper Mapper;
-
+        private bool _disposed = false;
         /// <summary>
         /// Constructor for BaseService.
         /// </summary>
@@ -70,10 +70,14 @@ namespace DrMW.Repositories.Services.Concretes
         /// <param name="disposing">True if disposing; otherwise, false.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!_disposed)
             {
-                UnitOfWork.Dispose();
-                QueryRepositories.Dispose();
+                if (disposing)
+                {
+                    UnitOfWork?.Dispose();
+                    QueryRepositories?.Dispose();
+                }
+                _disposed = true;
             }
         }
 

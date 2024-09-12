@@ -16,10 +16,14 @@ public class ReadOriginRepository<TEntity, TPrimary> :ReadAnonymousRepository<TE
     /// <summary>
     /// Initializes a new instance of the <see cref="ReadOriginRepository{TEntity,TPrimary}"/> class.
     /// </summary>
-    /// <param name="dbContext">The database context to be used by the repository.</param>
+    /// <param name="database">The database context to be used by the repository.</param>
     /// <param name="mapper">The AutoMapper instance for entity-DTO mappings.</param>
-    public ReadOriginRepository(DbContext dbContext, IMapper mapper):base(dbContext) => Mapper = mapper;
+    public ReadOriginRepository(IReadDatabase database, IMapper mapper):base(database) 
+        => Mapper = mapper;
 
+    protected  internal ReadOriginRepository(DbContext dbContext, IMapper mapper):base(dbContext) 
+        => Mapper = mapper;
+    
     #region GetAll
 
     /// <summary>

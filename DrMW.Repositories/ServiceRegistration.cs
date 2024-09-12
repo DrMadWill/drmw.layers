@@ -15,12 +15,15 @@ namespace DrMW.Repositories;
 
 public static class ServiceRegistration
 {
-    public static IServiceCollection LayerRepositoriesRegister<TUnitOfWork,TQueryRepositories,TWriteDbContext,TReadDbContext>
-        (this IServiceCollection services,ServiceLifetime lifetime = ServiceLifetime.Scoped)
+    public static IServiceCollection LayerRepositoriesRegister<TUnitOfWork, TQueryRepositories, TServiceManager,
+            TWriteDbContext, TReadDbContext>
+        (this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Scoped)
         where TReadDbContext : DbContext
         where TWriteDbContext : DbContext
         where TUnitOfWork : UnitOfWork<TWriteDbContext>
         where TQueryRepositories : QueryRepositories<TReadDbContext>
+        where TServiceManager : ServiceManager
+
     {
 
         switch (lifetime)
@@ -37,7 +40,7 @@ public static class ServiceRegistration
                 services.AddTransient(typeof(IReadRepository<,>), typeof(ReadRepository<,>));
                 services.AddTransient(typeof(IWriteRepository<,>), typeof(WriteRepository<,>));
                 services.AddTransient(typeof(IRepository<,>), typeof(Repository<,>));
-                
+
                 break;
             case ServiceLifetime.Singleton:
                 services.AddSingleton(typeof(IReadAnonymousRepository<>), typeof(ReadAnonymousRepository<>));
@@ -66,15 +69,19 @@ public static class ServiceRegistration
                 services.AddScoped(typeof(IWriteRepository<,>), typeof(WriteRepository<,>));
                 services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
                 break;
-            
+
         }
+
+        services.Add(new ServiceDescriptor(typeof(IReadDatabase), typeof(ReadDatabase<TReadDbContext>), lifetime));
+        services.Add(new ServiceDescriptor(typeof(IWriteDatabase), typeof(WriteDatabase<TWriteDbContext>), lifetime));
         
         services.Add(new ServiceDescriptor(typeof(IQueryRepositories), typeof(TQueryRepositories), lifetime));
         services.Add(new ServiceDescriptor(typeof(IUnitOfWork), typeof(TUnitOfWork), lifetime));
-        services.Add(new ServiceDescriptor(typeof(IServiceManager), typeof(ServiceManager), lifetime));
+        services.Add(new ServiceDescriptor(typeof(IServiceManager), typeof(TServiceManager), lifetime));
         
+
         return services;
 
-       
+
     }
 }

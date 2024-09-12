@@ -17,8 +17,12 @@ public class WriteRepository<TEntity, TPrimary> : WriteOriginRepository<TEntity,
     /// <summary>
     /// Initializes a new instance of the <see cref="WriteRepository{TEntity,TPrimary}"/> class.
     /// </summary>
-    /// <param name="dbContext">The database context to be used by the repository.</param>
-    public WriteRepository(DbContext dbContext) : base(dbContext)
+    /// <param name="database">The database context to be used by the repository.</param>
+    public WriteRepository(IWriteDatabase database) : base(database)
+    {
+    }
+    
+    protected internal WriteRepository(DbContext dbContext) : base(dbContext)
     {
     }
     

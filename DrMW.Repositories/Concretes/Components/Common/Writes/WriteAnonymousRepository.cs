@@ -11,14 +11,16 @@ public class WriteAnonymousRepository<TEntity> : BaseRepository<TEntity>,IWriteA
     /// <summary>
     /// Initializes a new instance of the <see cref="ReadOriginRepository{TEntity,TPrimary}"/> class.
     /// </summary>
-    /// <param name="dbContext">The database context to be used by the repository.</param>
-    public WriteAnonymousRepository(DbContext dbContext) : base(dbContext)
+    /// <param name="database">The database context to be used by the repository.</param>
+    public WriteAnonymousRepository(IWriteDatabase database) : base(database.Context)
     {
-       
     }
 
-  
-    
+    protected internal WriteAnonymousRepository(DbContext context) : base(context)
+    {
+    }
+
+
     /// <summary>
     /// Asynchronously adds a new entity to the DbSet.
     /// </summary>

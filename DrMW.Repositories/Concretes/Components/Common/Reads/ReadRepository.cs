@@ -18,12 +18,16 @@ public class ReadRepository<TEntity, TPrimary> : ReadOriginRepository<TEntity,TP
     /// <summary>
     /// Initializes a new instance of the <see cref="ReadRepository{TEntity,TPrimary}"/> class.
     /// </summary>
-    /// <param name="dbContext">The database context to be used by the repository.</param>
+    /// <param name="database">The database context to be used by the repository.</param>
     /// <param name="mapper">The AutoMapper instance for entity-DTO mappings.</param>
-    public ReadRepository(DbContext dbContext, IMapper mapper) : base(dbContext,mapper)
+    public ReadRepository(IReadDatabase database, IMapper mapper) : base(database,mapper)
     {
     }
 
+    protected internal ReadRepository(DbContext dbContext, IMapper mapper) : base(dbContext,mapper)
+    {
+    }
+    
     public override IQueryable<TEntity> Queryable(bool isTracking = false) =>
         base.Queryable(isTracking).Where(s => s.IsDeleted != true)
             .OrderByDescending(s => s.CreatedDate);

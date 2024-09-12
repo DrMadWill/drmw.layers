@@ -11,11 +11,15 @@ public class WriteOriginRepository<TEntity, TPrimary> :  WriteAnonymousRepositor
     /// <summary>
     /// Initializes a new instance of the <see cref="WriteOriginRepository{TEntity,TPrimary}"/> class.
     /// </summary>
-    /// <param name="dbContext">The database context to be used by the repository.</param>
-    public WriteOriginRepository(DbContext dbContext):base(dbContext)
+    /// <param name="database">The database context to be used b y the repository.</param>
+    public WriteOriginRepository(IWriteDatabase database):base(database)
     {
     }
     
+    protected   internal WriteOriginRepository(DbContext dbContext):base(dbContext)
+    {
+    }
+
    
     
     /// <summary>

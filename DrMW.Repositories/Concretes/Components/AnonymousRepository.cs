@@ -1,4 +1,5 @@
 using DrMW.Repositories.Abstractions.Components;
+using DrMW.Repositories.Abstractions.Components.Common.Writes;
 using DrMW.Repositories.Concretes.Components.Common.Reads;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,12 +11,15 @@ public class AnonymousRepository<TEntity> : ReadAnonymousRepository<TEntity>, IA
     
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="dbContext"/> class.
+    /// Initializes a new instance of the <see cref="database"/> class.
     /// </summary>
-    public AnonymousRepository(DbContext dbContext):base(dbContext)
+    public AnonymousRepository(IWriteDatabase database):base(database.Context)
     {
     }
     
+    protected internal AnonymousRepository(DbContext dbContext):base(dbContext)
+    {
+    }
     /// <summary>
     /// Destructor for ReadRepository.
     /// </summary>

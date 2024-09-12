@@ -12,11 +12,16 @@ public class ReadAnonymousRepository<TEntity> : BaseRepository<TEntity>,IReadAno
     /// <summary>
     /// Initializes a new instance of the class.
     /// </summary>
-    /// <param name="dbContext">The database context to be used by the repository.</param>
-    public ReadAnonymousRepository(DbContext dbContext) : base(dbContext)
+    /// <param name="database">The database context to be used by the repository.</param>
+    public ReadAnonymousRepository(IReadDatabase database) : base(database.Context)
+    {
+    }
+
+    protected internal ReadAnonymousRepository(DbContext dbContext) : base(dbContext)
     {
     }
     
+
     /// <summary>
     /// Binds include properties to the given query.
     /// </summary>
