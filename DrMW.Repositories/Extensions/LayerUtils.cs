@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
-namespace DrMadWill.Layers.Repository.Extensions
+namespace DrMW.Repositories.Extensions
 {
     /// <summary>
     /// Utility class for common extension methods.

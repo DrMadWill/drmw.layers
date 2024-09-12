@@ -15,11 +15,11 @@ namespace DrMW.Repositories.Concretes.Components;
 public class Repository<TEntity, TPrimary> : ReadRepository<TEntity,TPrimary>,IRepository<TEntity, TPrimary>
     where TEntity : class, IBaseEntity<TPrimary>
 {
-   
     /// <summary>
     /// Initializes a new instance of the <see cref="Repository{TEntity,TPrimary}"/> class.
     /// </summary>
     /// <param name="dbContext">The database context to be used by the repository.</param>
+    /// <param name="mapper"></param>
     public Repository(DbContext dbContext,IMapper mapper) : base(dbContext,mapper)
     {
     }

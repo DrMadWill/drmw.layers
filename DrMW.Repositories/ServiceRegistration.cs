@@ -6,6 +6,8 @@ using DrMW.Repositories.Concretes.Components;
 using DrMW.Repositories.Concretes.Components.Common.Reads;
 using DrMW.Repositories.Concretes.Components.Common.Writes;
 using DrMW.Repositories.Concretes.Works;
+using DrMW.Repositories.Services.Abstractions;
+using DrMW.Repositories.Services.Concretes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -69,7 +71,8 @@ public static class ServiceRegistration
         
         services.Add(new ServiceDescriptor(typeof(IQueryRepositories), typeof(TQueryRepositories), lifetime));
         services.Add(new ServiceDescriptor(typeof(IUnitOfWork), typeof(TUnitOfWork), lifetime));
-
+        services.Add(new ServiceDescriptor(typeof(IServiceManager), typeof(ServiceManager), lifetime));
+        
         return services;
 
        

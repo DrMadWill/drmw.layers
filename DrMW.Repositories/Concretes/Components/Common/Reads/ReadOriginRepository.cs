@@ -1,7 +1,5 @@
 using System.Linq.Expressions;
 using AutoMapper;
-using DrMadWill.Layers.Repository.Extensions;
-using DrMadWill.Layers.Repository.Extensions.Paging;
 using DrMW.Core.Abstractions;
 using DrMW.Core.Models.Abstractions;
 using DrMW.Repositories.Abstractions.Components.Common.Reads;

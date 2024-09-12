@@ -1,4 +1,4 @@
-namespace DrMadWill.Layers.Repository.Extensions.Paging
+namespace DrMW.Repositories.Extensions.Paging
 {
     /// <summary>
     /// Represents a model for pagination.

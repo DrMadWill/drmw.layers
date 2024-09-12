@@ -1,18 +1,16 @@
-namespace DrMadWill.Layers.Repository.Extensions.Paging
+namespace DrMW.Repositories.Extensions.Paging;
+/// <summary>
+/// Represents a request for paging.
+/// </summary>
+public class PageReq
 {
     /// <summary>
-    /// Represents a request for paging.
+    /// Gets or sets the page number.
     /// </summary>
-    public class PageReq
-    {
-        /// <summary>
-        /// Gets or sets the page number.
-        /// </summary>
-        public int Page { get; set; } = 1;
+    public int Page { get; set; } = 1;
 
-        /// <summary>
-        /// Gets or sets the number of items per page.
-        /// </summary>
-        public int PerPage { get; set; } = 10;
-    }
+    /// <summary>
+    /// Gets or sets the number of items per page.
+    /// </summary>
+    public int PerPage { get; set; } = 10;
 }

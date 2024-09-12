@@ -1,5 +1,4 @@
-namespace DrMadWill.Layers.Repository.Extensions.Paging
-{
+namespace DrMW.Repositories.Extensions.Paging;
     /// <summary>
     /// Helper class for pagination of IQueryable data.
     /// </summary>
@@ -24,4 +23,3 @@ namespace DrMadWill.Layers.Repository.Extensions.Paging
             return paginatedSource;
         }
     }
-}
