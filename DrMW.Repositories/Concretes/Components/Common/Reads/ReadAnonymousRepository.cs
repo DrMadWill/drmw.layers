@@ -38,7 +38,7 @@ public class ReadAnonymousRepository<TEntity> : BaseRepository<TEntity>,IReadAno
     /// </summary>
     /// <returns>An IQueryable of all entities of type TEntity.</returns>
     public virtual IQueryable<TEntity> Queryable(bool isTracking = false) =>
-        isTracking ? (Table.AsNoTracking()) : Table.AsQueryable();
+        isTracking ?  Table.AsQueryable() : (Table.AsNoTracking());
 
     /// <summary>
     /// Retrieves an IQueryable for all entities of type TEntity, optionally including deleted entities and/or applying tracking.

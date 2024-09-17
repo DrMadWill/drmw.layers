@@ -106,33 +106,7 @@ namespace DrMW.Repositories.Concretes.Works
         /// </summary>
         /// <returns>A task representing the asynchronous operation.</returns>
         public virtual Task CommitAsync() => DbContext.SaveChangesAsync();
-
-        public virtual async Task SynchronizationData<TEvent, TEntity, TPrimary>(TEvent @event,Action<string>? log = null) 
-            where TEvent : class, IHasDelete 
-            where TEntity : class, IOriginEntity<TPrimary>, new()
-        {
-            var repo = OriginRepository<TEntity, TPrimary>();
-            var dict = Mapper.Map<TEntity>(@event);
-            if (@event.IsDeleted == true)
-            {
-                try
-                {
-                    await repo.RemoveAsync(dict);
-                    await CommitAsync();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    log?.Invoke(nameof(TEvent) + $" error occur | not deleted | err : {e}");
-                }
-            }
-            else
-            {
-                if (await repo.Table.AnyAsync(s => s.Id.Equals(dict.Id))) await repo.UpdateAsync(dict);
-                else await repo.AddAsync(dict);
-                await CommitAsync();
-            }
-        }
+        
 
         /// <summary>
         /// Disposes of the DbContext and clears repository references.

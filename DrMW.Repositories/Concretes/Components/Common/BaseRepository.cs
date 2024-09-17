@@ -34,6 +34,7 @@ where TEntity : class
         if (disposing)
         {
             // Free any other managed objects here.
+            AppDbContext?.Dispose();
         }
     }
 

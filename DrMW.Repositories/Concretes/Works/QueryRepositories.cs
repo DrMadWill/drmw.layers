@@ -126,7 +126,6 @@ namespace DrMW.Repositories.Concretes.Works
                         disposableRepo.Dispose();
                     }
                 }
-
                 Repositories.Clear();
             }
         }
