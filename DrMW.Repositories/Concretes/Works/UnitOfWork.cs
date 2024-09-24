@@ -17,6 +17,9 @@ namespace DrMW.Repositories.Concretes.Works
     {
         protected readonly TDbContext DbContext;
         protected readonly Dictionary<Type, object> Repositories;
+        protected readonly Dictionary<Type, object> OriginRepositories;
+        protected readonly Dictionary<Type, object> AnonymousRepositories;
+        protected readonly Dictionary<Type, object> SpecialRepositories;
         protected readonly Assembly Assembly;
         protected readonly IMapper Mapper;
         protected readonly IServiceProvider ServiceProvider;
@@ -32,6 +35,10 @@ namespace DrMW.Repositories.Concretes.Works
         {
             DbContext = context;
             Repositories = new Dictionary<Type, object>();
+            OriginRepositories = new Dictionary<Type, object>();
+            Repositories = new Dictionary<Type, object>();
+            AnonymousRepositories = new Dictionary<Type, object>();
+            SpecialRepositories = new Dictionary<Type, object>();
             Assembly = assembly;
             Mapper = mapper;
             ServiceProvider = serviceProvider;
@@ -56,21 +63,21 @@ namespace DrMW.Repositories.Concretes.Works
 
         public IAnonymousRepository<TEntity> AnonymousRepository<TEntity>() where TEntity : class
         {
-            if (Repositories.TryGetValue(typeof(TEntity), out var repository))
+            if (AnonymousRepositories.TryGetValue(typeof(TEntity), out var repository))
                 return repository as IAnonymousRepository<TEntity>;
 
             var repo = new AnonymousRepository<TEntity>(DbContext);
-            Repositories.Add(typeof(TEntity), repo);
+            AnonymousRepositories.Add(typeof(TEntity), repo);
             return repo;
         }
 
         public IOriginRepository<TEntity, TPrimary> OriginRepository<TEntity, TPrimary>() where TEntity : class, IOriginEntity<TPrimary>
         {
-            if (Repositories.TryGetValue(typeof(TEntity), out var repository))
+            if (OriginRepositories.TryGetValue(typeof(TEntity), out var repository))
                 return repository as IOriginRepository<TEntity, TPrimary>;
 
             var repo = new OriginRepository<TEntity, TPrimary>(DbContext,Mapper);
-            Repositories.Add(typeof(TEntity), repo);
+            OriginRepositories.Add(typeof(TEntity), repo);
             return repo;
         }
 
@@ -81,7 +88,7 @@ namespace DrMW.Repositories.Concretes.Works
         /// <returns>An instance of the special repository.</returns>
         public virtual TRepository SpecialRepository<TRepository>()
         {
-            if (Repositories.TryGetValue(typeof(TRepository), out var repository))
+            if (SpecialRepositories.TryGetValue(typeof(TRepository), out var repository))
                 return (TRepository)repository;
 
             var implementationType = Assembly.GetTypes()
@@ -96,7 +103,7 @@ namespace DrMW.Repositories.Concretes.Works
             if (instance is not TRepository typedRepository)
                 throw new InvalidOperationException($"Created instance is not of type {typeof(TRepository)}");
             
-            Repositories.Add(typeof(TRepository), typedRepository);
+            SpecialRepositories.Add(typeof(TRepository), typedRepository);
 
             return typedRepository;
         }

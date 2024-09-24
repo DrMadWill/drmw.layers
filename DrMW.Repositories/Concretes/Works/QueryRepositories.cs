@@ -6,6 +6,7 @@ using DrMW.Repositories.Abstractions.Components.Common.Reads;
 using DrMW.Repositories.Abstractions.Works;
 using DrMW.Repositories.Concretes.Components.Common.Reads;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DrMW.Repositories.Concretes.Works
 {
@@ -18,6 +19,10 @@ namespace DrMW.Repositories.Concretes.Works
         protected readonly TDbContext DbContext;
         protected readonly IMapper Mapper;
         protected readonly Dictionary<Type, object> Repositories;
+        protected readonly Dictionary<Type, object> OriginRepositories;
+        protected readonly Dictionary<Type, object> AnonymousRepositories;
+        protected readonly Dictionary<Type, object> SpecialRepositories;
+        protected readonly IServiceProvider ServiceProvider;
         protected readonly Assembly Assembly;
 
         /// <summary>
@@ -26,21 +31,27 @@ namespace DrMW.Repositories.Concretes.Works
         /// <param name="dbContext">The DbContext to be used for queries.</param>
         /// <param name="mapper">The AutoMapper instance for mapping entities.</param>
         /// <param name="assembly">The Type used for assembly information.</param>
-        public QueryRepositories(TDbContext dbContext, IMapper mapper, Assembly assembly)
+        /// <param name="serviceProvider"></param>
+        public QueryRepositories(TDbContext dbContext, IMapper mapper, Assembly assembly, IServiceProvider serviceProvider)
         {
             DbContext = dbContext;
             Mapper = mapper;
             Repositories = new Dictionary<Type, object>();
+            OriginRepositories = new Dictionary<Type, object>();
+            Repositories = new Dictionary<Type, object>();
+            AnonymousRepositories = new Dictionary<Type, object>();
+            SpecialRepositories = new Dictionary<Type, object>();
             Assembly = assembly;
+            ServiceProvider = serviceProvider;
         }
         
         public IReadAnonymousRepository<TEntity> AnonymousRepository<TEntity>() where TEntity : class
         {
-            if (Repositories.TryGetValue(typeof(TEntity), out var repository))
+            if (AnonymousRepositories.TryGetValue(typeof(TEntity), out var repository))
                 return repository as IAnonymousRepository<TEntity>;
            
             var repo = new ReadAnonymousRepository<TEntity>(DbContext);
-            Repositories.Add(typeof(TEntity), repo);
+            AnonymousRepositories.Add(typeof(TEntity), repo);
             return repo; 
         }
 
@@ -63,11 +74,11 @@ namespace DrMW.Repositories.Concretes.Works
 
         public IReadOriginRepository<TEntity, TPrimary> OriginRepository<TEntity, TPrimary>() where TEntity : class, IOriginEntity<TPrimary>
         {
-            if (Repositories.TryGetValue(typeof(TEntity), out var repository))
+            if (OriginRepositories.TryGetValue(typeof(TEntity), out var repository))
                 return repository as IReadOriginRepository<TEntity, TPrimary>;
 
             var repo = new ReadOriginRepository<TEntity, TPrimary>(DbContext, Mapper);
-            Repositories.Add(typeof(TEntity), repo);
+            OriginRepositories.Add(typeof(TEntity), repo);
             return repo; 
         }
 
@@ -80,7 +91,7 @@ namespace DrMW.Repositories.Concretes.Works
         /// <returns>An instance of the special repository.</returns>
         public virtual TRepository SpecialRepository<TRepository>()
         {
-            if (Repositories.Keys.Contains(typeof(TRepository)))
+            if (SpecialRepositories.Keys.Contains(typeof(TRepository)))
                 return (TRepository)Repositories[typeof(TRepository)];
 
             var type = Assembly.GetTypes()
@@ -91,11 +102,13 @@ namespace DrMW.Repositories.Concretes.Works
             if (type == null)
                 throw new KeyNotFoundException($"Repository type is not found: {typeof(TRepository).Name.Substring(1)}");
 
-            var repository = (TRepository)Activator.CreateInstance(type, DbContext, Mapper)!;
+            var instance = (TRepository)ActivatorUtilities.CreateInstance(ServiceProvider, type, DbContext);
+            if (instance is not TRepository typedRepository)
+                throw new InvalidOperationException($"Created instance is not of type {typeof(TRepository)}");
 
-            Repositories.Add(typeof(TRepository), repository);
+            SpecialRepositories.Add(typeof(TRepository), instance);
 
-            return repository;
+            return instance;
         }
 
         /// <summary>
