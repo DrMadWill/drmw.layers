@@ -35,7 +35,7 @@ public static class ServiceRegistration
 
                 services.AddTransient(typeof(IReadOriginRepository<,>), typeof(ReadOriginRepository<,>));
                 services.AddTransient(typeof(IWriteOriginRepository<,>), typeof(WriteOriginRepository<,>));
-                services.AddTransient(typeof(IOriginRepository<,>), typeof(ReadRepository<,>));
+                services.AddTransient(typeof(IOriginRepository<,>), typeof(OriginRepository<,>));
 
                 services.AddTransient(typeof(IReadRepository<,>), typeof(ReadRepository<,>));
                 services.AddTransient(typeof(IWriteRepository<,>), typeof(WriteRepository<,>));
@@ -49,7 +49,7 @@ public static class ServiceRegistration
 
                 services.AddSingleton(typeof(IReadOriginRepository<,>), typeof(ReadOriginRepository<,>));
                 services.AddSingleton(typeof(IWriteOriginRepository<,>), typeof(WriteOriginRepository<,>));
-                services.AddSingleton(typeof(IOriginRepository<,>), typeof(ReadRepository<,>));
+                services.AddSingleton(typeof(IOriginRepository<,>), typeof(OriginRepository<,>));
 
                 services.AddSingleton(typeof(IReadRepository<,>), typeof(ReadRepository<,>));
                 services.AddSingleton(typeof(IWriteRepository<,>), typeof(WriteRepository<,>));
@@ -63,7 +63,7 @@ public static class ServiceRegistration
 
                 services.AddScoped(typeof(IReadOriginRepository<,>), typeof(ReadOriginRepository<,>));
                 services.AddScoped(typeof(IWriteOriginRepository<,>), typeof(WriteOriginRepository<,>));
-                services.AddScoped(typeof(IOriginRepository<,>), typeof(ReadRepository<,>));
+                services.AddScoped(typeof(IOriginRepository<,>), typeof(OriginRepository<,>));
 
                 services.AddScoped(typeof(IReadRepository<,>), typeof(ReadRepository<,>));
                 services.AddScoped(typeof(IWriteRepository<,>), typeof(WriteRepository<,>));
