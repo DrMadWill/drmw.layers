@@ -48,7 +48,7 @@ namespace DrMW.Repositories.Concretes.Works
         public IReadAnonymousRepository<TEntity> AnonymousRepository<TEntity>() where TEntity : class
         {
             if (AnonymousRepositories.TryGetValue(typeof(TEntity), out var repository))
-                return repository as IAnonymousRepository<TEntity>;
+                return repository as IReadAnonymousRepository<TEntity>;
            
             var repo = new ReadAnonymousRepository<TEntity>(DbContext);
             AnonymousRepositories.Add(typeof(TEntity), repo);
