@@ -25,6 +25,30 @@ public class WriteRepository<TEntity, TPrimary> : WriteOriginRepository<TEntity,
     protected internal WriteRepository(DbContext dbContext) : base(dbContext)
     {
     }
+
+    public override Task<TEntity> AddAsync(TEntity entity)
+    {
+        entity.CreatedDate = DateTime.UtcNow;
+        return base.AddAsync(entity);
+    }
+
+    public override Task<List<TEntity>> AddRangeAsync(List<TEntity> entities)
+    {
+        entities.ForEach(e => e.CreatedDate = DateTime.UtcNow);
+        return base.AddRangeAsync(entities);
+    }
+
+    public override Task<TEntity> UpdateAsync(TEntity entity)
+    {
+        entity.UpdatedDate = DateTime.UtcNow;
+        return base.UpdateAsync(entity);
+    }
+
+    public override Task<List<TEntity>> UpdateRangeAsync(List<TEntity> entities)
+    {
+        entities.ForEach(e => e.UpdatedDate = DateTime.UtcNow);
+        return base.UpdateRangeAsync(entities);
+    }
     
     /// <summary>
     /// Asynchronously marks an entity as deleted in the DbSet. This is a soft delete operation.

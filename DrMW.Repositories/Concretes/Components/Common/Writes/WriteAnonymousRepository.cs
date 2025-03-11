@@ -26,7 +26,7 @@ public class WriteAnonymousRepository<TEntity> : BaseRepository<TEntity>,IWriteA
     /// </summary>
     /// <param name="entity">The entity to add.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the added entity.</returns>
-    public async Task<TEntity> AddAsync(TEntity entity)
+    public virtual async Task<TEntity> AddAsync(TEntity entity)
     {
         await Table.AddAsync(entity);
         return entity;
@@ -38,7 +38,7 @@ public class WriteAnonymousRepository<TEntity> : BaseRepository<TEntity>,IWriteA
     /// </summary>
     /// <param name="entities">The list of entities to add.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the list of added entities.</returns>
-    public async Task<List<TEntity>> AddRangeAsync(List<TEntity> entities)
+    public virtual async Task<List<TEntity>> AddRangeAsync(List<TEntity> entities)
     {
         await Table.AddRangeAsync(entities);
         return entities;
@@ -50,7 +50,7 @@ public class WriteAnonymousRepository<TEntity> : BaseRepository<TEntity>,IWriteA
     /// </summary>
     /// <param name="entity">The entity to update.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the updated entity.</returns>
-    public async Task<TEntity> UpdateAsync(TEntity entity)
+    public virtual async Task<TEntity> UpdateAsync(TEntity entity)
     {
         Table.Update(entity);
         return entity;
@@ -62,7 +62,7 @@ public class WriteAnonymousRepository<TEntity> : BaseRepository<TEntity>,IWriteA
     /// </summary>
     /// <param name="entities">The list of entities to update.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the list of updated entities.</returns>
-    public async Task<List<TEntity>> UpdateRangeAsync(List<TEntity> entities)
+    public virtual async Task<List<TEntity>> UpdateRangeAsync(List<TEntity> entities)
     {
         Table.UpdateRange(entities);
         return entities;
@@ -73,7 +73,7 @@ public class WriteAnonymousRepository<TEntity> : BaseRepository<TEntity>,IWriteA
     /// </summary>
     /// <param name="entity">The entity to remove.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the removed entity.</returns>
-    public async Task<TEntity> RemoveAsync(TEntity entity) // Hard Delete
+    public virtual async Task<TEntity> RemoveAsync(TEntity entity) // Hard Delete
     {
         Table.Remove(entity);
         return entity;
@@ -85,7 +85,7 @@ public class WriteAnonymousRepository<TEntity> : BaseRepository<TEntity>,IWriteA
     /// </summary>
     /// <param name="entities">The list of entities to remove.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the list of removed entities.</returns>
-    public async Task<List<TEntity>> RemoveRangeAsync(List<TEntity> entities) // Hard Delete
+    public virtual async Task<List<TEntity>> RemoveRangeAsync(List<TEntity> entities) // Hard Delete
     {
         Table.RemoveRange(entities);
         return entities;
