@@ -11,6 +11,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="13.0.1" />
+        <PackageReference Include="Dr.Pagination" Version="1.0.1" />
         <PackageReference Include="DrMW.Core" Version="1.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.27" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

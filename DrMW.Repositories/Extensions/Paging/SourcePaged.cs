@@ -1,3 +1,4 @@
+using Dr.Pagination;
 using Microsoft.EntityFrameworkCore;
 
 namespace DrMW.Repositories.Extensions.Paging
@@ -6,35 +7,9 @@ namespace DrMW.Repositories.Extensions.Paging
     /// Represents a paged data source with pagination information.
     /// </summary>
     /// <typeparam name="T">The type of elements in the data source.</typeparam>
-    public class SourcePaged<T>
+    public class SourcePaged<T> : Paged<T>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SourcePaged{T}"/> class.
-        /// </summary>
-        public SourcePaged()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SourcePaged{T}"/> class.
-        /// </summary>
-        /// <param name="isIProp">A boolean indicating whether the class implements IProp.</param>
-        public SourcePaged(bool isIProp)
-        {
-            PagingModel = new PageModel(0, 0, 0);
-            Source = new List<T>();
-        }
-
-        /// <summary>
-        /// Gets or sets the paging information for the data source.
-        /// </summary>
-        public PageModel PagingModel { get; set; }
-
-        /// <summary>
-        /// Gets or sets the paged data source.
-        /// </summary>
-        public IList<T> Source { get; set; }
-
+        
         /// <summary>
         /// Asynchronously retrieves a paged data source based on the provided request.
         /// </summary>
@@ -56,6 +31,23 @@ namespace DrMW.Repositories.Extensions.Paging
             {
                 PagingModel = new PageModel(await source.CountAsync(), req.Page, Paginate<TEntity>.PerPage),
                 Source = await Paginate<TEntity>.Paging(source, req.Page).ToListAsync(),
+            };
+        }
+        
+        public static async Task<SourcePaged<TEntity>> PagedAsync<TEntity>(IQueryable<TEntity> source, PageReq req,Func<List<TEntity>,List<TEntity>> func)
+            where TEntity : class
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            req.Page = req.Page == 0 ? 1 : req.Page;
+
+            // PerPage Count
+            if (req.PerPage > 0 && req.PerPage <= 200)
+                Paginate<TEntity>.PerPage = req.PerPage;
+
+            return new SourcePaged<TEntity>
+            {
+                PagingModel = new PageModel(await source.CountAsync(), req.Page, Paginate<TEntity>.PerPage),
+                Source = func((await Paginate<TEntity>.Paging(source, req.Page).ToListAsync())),
             };
         }
 
@@ -82,4 +74,24 @@ namespace DrMW.Repositories.Extensions.Paging
             return (await paged.ToListAsync(), model);
         }
     }
+
+    public static class PagedUtils
+    {
+        public static Task<SourcePaged<T>> ToPagedAsync<T>(this IQueryable<T> source, PageReq req)
+        where T : class
+        {
+            return SourcePaged<T>.PagedAsync(source, req);
+        }
+        
+        public static Task<SourcePaged<T>> ToPagedAsync<T>(this IQueryable<T> source, PageReq req,Func<List<T>,List<T>> func)
+            where T : class
+        {
+            return SourcePaged<T>.PagedAsync(source, req,func);
+        }
+        
+        
+
+    }
+
 }
+
